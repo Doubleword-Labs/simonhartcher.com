@@ -1,0 +1,8 @@
+{
+  "languages": {
+    "HTML": {
+      "language_servers": ["vscode-html-language-server", "superhtml"],
+      "formatter": { "language_server": { "name": "superhtml" } }
+    }
+  }
+}
