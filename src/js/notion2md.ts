@@ -159,7 +159,7 @@ for (const page of config.notion.additionalPages) {
 .title = "${page.title}",
 .layout = "page.shtml",
 .author = "${config.defaultAuthor}",
-.date = "${moment().format("YYYY-MM-DD")}",
+.date = "${moment(notionPage.last_edited_time).format("YYYY-MM-DD")}",
 .tags = [],
 .custom = {
   ${cover ? `.cover = "${cover.rawHtml.replace(/"/gm, "'")}",` : ""}
