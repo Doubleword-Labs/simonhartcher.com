@@ -21,6 +21,7 @@
     <style :html="$site.asset('pico.violet.min.css').bytes()"></style>
     <style :html="$site.asset('styles.min.css').bytes()"></style>
     <link rel="alternate" type="application/rss+xml" title="Simon Hartcher's Blog RSS Feed" href="/index.xml">
+    <script defer src="https://unpkg.com/alpinejs@3.14.8/dist/cdn.min.js"></script>
     <super>
   </head>
   <body>
@@ -32,7 +33,6 @@
         <li><a href="$site.page('index').link()">Home</a></li>
         <li><a href="$site.page('about').link()">About</a></li>
         <li><a href="$site.page('contact').link()">Contact</a></li>
-        <li style="display: none;"><a href="$site.page('subscribe').link()">Subscribe</a></li>
       </ul>
     </nav>
     <aside class="nav__vertical">
@@ -44,7 +44,6 @@
           <li><a href="$site.page('index').link()">Home</a></li>
           <li><a href="$site.page('about').link()">About</a></li>
           <li><a href="$site.page('contact').link()">Contact</a></li>
-          <li style="display: none;"><a href="$site.page('subscribe').link()">Subscribe</a></li>
         </ul>
       </nav>
     </aside>
