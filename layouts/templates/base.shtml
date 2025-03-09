@@ -21,22 +21,29 @@
     <style :html="$site.asset('pico.violet.min.css').bytes()"></style>
     <style :html="$site.asset('styles.min.css').bytes()"></style>
     <link rel="alternate" type="application/rss+xml" title="Simon Hartcher's Blog RSS Feed" href="/index.xml">
-    <script defer src="https://unpkg.com/alpinejs@3.14.8/dist/cdn.min.js"></script>
+    <script defer src="$site.asset('main.min.js').link()"></script>
     <super>
   </head>
   <body>
-    <nav class="nav__horizontal">
-      <ul>
-        <li id="nav-title"><a href="$site.page('index').link()"><strong :text="$site.title"></strong></a></li>
-      </ul>
-      <ul>
-        <li><a href="$site.page('index').link()">Home</a></li>
-        <li><a href="$site.page('about').link()">About</a></li>
-        <li><a href="$site.page('contact').link()">Contact</a></li>
-      </ul>
-    </nav>
-    <aside class="nav__vertical">
-      <nav>
+    <div x-data="{ open: false }">
+      <form method="post" action="https://listmonk.simonhartcher.com/subscription/form" class="listmonk-form">
+        <dialog :open="open">
+          <article>
+            <header>
+              <button aria-label="Close" rel="prev" @click="open = false"></button>
+              <h3>Subscribe for more content delivered to your inbox! 🎉</h3>
+            </header>
+            <input type="hidden" name="nonce">
+            <p><input type="email" name="email" required placeholder="E-mail"></p>
+            <p><input type="text" name="name" placeholder="Name (optional)"></p>
+            <input id="261b8" type="hidden" name="l" value="261b8248-9c4e-4ab5-a843-d95fab76fee3">
+            <footer>
+              <button type="submit" style="margin-bottom: 0">Subscribe</button>
+            </footer>
+          </article>
+        </dialog>
+      </form>
+      <nav class="nav__horizontal">
         <ul>
           <li id="nav-title"><a href="$site.page('index').link()"><strong :text="$site.title"></strong></a></li>
         </ul>
@@ -44,9 +51,23 @@
           <li><a href="$site.page('index').link()">Home</a></li>
           <li><a href="$site.page('about').link()">About</a></li>
           <li><a href="$site.page('contact').link()">Contact</a></li>
+          <li><a href="$site.page('subscribe').link()" @click="open = true" onclick="return false">Subscribe</a></li>
         </ul>
       </nav>
-    </aside>
+      <aside class="nav__vertical">
+        <nav>
+          <ul>
+            <li id="nav-title"><a href="$site.page('index').link()"><strong :text="$site.title"></strong></a></li>
+          </ul>
+          <ul>
+            <li><a href="$site.page('index').link()">Home</a></li>
+            <li><a href="$site.page('about').link()">About</a></li>
+            <li><a href="$site.page('contact').link()">Contact</a></li>
+            <li><a href="$site.page('subscribe').link()" @click="open = true" onclick="return false">Subscribe</a></li>
+          </ul>
+        </nav>
+      </aside>
+    </div>
     <main id="content" class="container">
       <super>
     </main>

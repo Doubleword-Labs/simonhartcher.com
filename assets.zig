@@ -1,6 +1,7 @@
 pub const assets = [_][]const u8{
-    "styles.css",
+    "styles.min.css",
     "pico.violet.min.css",
+    "main.min.js",
     "posts\\2009-09-13-howto-query-mssql-and-send-html-email-using-powershell\\cover-thumbnail.webp",
     "posts\\2009-09-13-howto-query-mssql-and-send-html-email-using-powershell\\cover-small.webp",
     "posts\\2009-09-13-howto-query-mssql-and-send-html-email-using-powershell\\cover-medium.webp",

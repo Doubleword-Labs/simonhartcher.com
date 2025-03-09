@@ -1,8 +1,8 @@
-import { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import config from "./config";
 import { ImageTransformer } from "./lib/images";
 import { codeTransformer } from "./lib/transformers";
-import { PageObjectResponseWithProperties } from "./lib/types";
+import type { PageObjectResponseWithProperties } from "./lib/types";
 import { Client } from "@notionhq/client";
 import fs from "fs";
 import moment from "moment";
@@ -22,8 +22,9 @@ fs.readdirSync(config.postsDir, { recursive: true, }).forEach((file) => existing
 fs.readdirSync(config.assetsDir, { recursive: true }).forEach((file) => existingFiles.add(path.join(config.assetsDir, file)));
 
 const referencedFiles = new Set<string>();
-referencedFiles.add(path.join(config.assetsDir, "styles.css"));
+referencedFiles.add(path.join(config.assetsDir, "styles.min.css"));
 referencedFiles.add(path.join(config.assetsDir, "pico.violet.min.css"));
+referencedFiles.add(path.join(config.assetsDir, "main.min.js"));
 
 const n2md = new NotionToMarkdown({ notionClient });
 n2md.setCustomTransformer("code", codeTransformer);
