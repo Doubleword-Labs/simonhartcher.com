@@ -39,6 +39,6 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          projectName: simonhartcher-com
+          projectName: simonhartcher-com-1
           directory: zig-out
           gitHubToken: ${{ secrets.GITHUB_TOKEN }}
