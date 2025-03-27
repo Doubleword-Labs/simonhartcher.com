@@ -3,7 +3,7 @@
     "sync": "bun src/scripts/notion2md.ts",
     "prebuild": "bun build.ts",
     "build": "zig build",
-    "dev": "npm run build -- -Ddebug serve",
+    "dev": "bun dev.ts",
     "predev": "npx rimraf zig-out"
   },
   "dependencies": {
@@ -18,8 +18,10 @@
   },
   "devDependencies": {
     "@types/alpinejs": "^3.13.11",
+    "@types/bun": "latest",
+    "@types/node-static": "^0.7.11",
     "@types/ramda": "^0.30.2",
-    "@types/bun": "latest"
+    "node-static": "^0.7.11"
   },
   "name": "simonhartcher.com",
   "module": "src/index.ts",

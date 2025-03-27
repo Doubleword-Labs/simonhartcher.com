@@ -1,15 +1,15 @@
-import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
 import config from "./config";
 import { ImageTransformer } from "./lib/images";
 import { codeTransformer } from "./lib/transformers";
 import type { PageObjectResponseWithProperties } from "./lib/types";
 import { Client } from "@notionhq/client";
+import type { PageObjectResponse } from "@notionhq/client/build/src/api-endpoints";
+import { execSync } from "child_process";
 import fs from "fs";
 import moment from "moment";
 import { NotionToMarkdown } from "notion-to-md";
 import path from "path";
 import { difference } from "ramda";
-import { execSync } from "child_process";
 
 const notionClient = new Client({ auth: config.notion.authToken });
 const databaseId = config.notion.databaseId;
@@ -18,10 +18,15 @@ fs.mkdirSync(config.postsDir, { recursive: true });
 fs.mkdirSync(config.assetsDir, { recursive: true });
 
 const existingFiles = new Set<string>();
-fs.readdirSync(config.postsDir, { recursive: true, }).forEach((file) => existingFiles.add(path.join(config.postsDir, file)));
-fs.readdirSync(config.assetsDir, { recursive: true }).forEach((file) => existingFiles.add(path.join(config.assetsDir, file)));
+fs.readdirSync(config.postsDir, { recursive: true }).forEach((file) =>
+  existingFiles.add(path.join(config.postsDir, file))
+);
+fs.readdirSync(config.assetsDir, { recursive: true }).forEach((file) =>
+  existingFiles.add(path.join(config.assetsDir, file))
+);
 
 const referencedFiles = new Set<string>();
+referencedFiles.add(path.join(config.assetsDir, "styles.css"));
 referencedFiles.add(path.join(config.assetsDir, "styles.min.css"));
 referencedFiles.add(path.join(config.assetsDir, "pico.violet.min.css"));
 referencedFiles.add(path.join(config.assetsDir, "main.min.js"));
@@ -93,12 +98,15 @@ for (const page of response.results as PageObjectResponseWithProperties[]) {
   const imageTransformer = new ImageTransformer(postAssetDir);
 
   const cover = page.cover
-    ? await imageTransformer.processImageBlock({
-      id: "cover",
-      image: page.cover,
-    }, {
-      className: "cover",
-    })
+    ? await imageTransformer.processImageBlock(
+        {
+          id: "cover",
+          image: page.cover,
+        },
+        {
+          className: "cover",
+        }
+      )
     : undefined;
 
   n2md.setCustomTransformer("image", imageTransformer.transform);
@@ -118,6 +126,7 @@ for (const page of response.results as PageObjectResponseWithProperties[]) {
 .aliases = ["${slug}/index.html"],
 .custom = {
   ${cover ? `.cover = "${cover.rawHtml.replace(/"/gm, "'")}",` : ""}
+  .featured = ${props.Featured.checkbox},
 },
 ---
 
@@ -139,22 +148,29 @@ for (const page of config.notion.additionalPages) {
 
   referencedFiles.add(filePath);
 
-  const notionPage = await notionClient.pages.retrieve({
+  const notionPage = (await notionClient.pages.retrieve({
     page_id: page.pageId,
-  }) as PageObjectResponse;
+  })) as PageObjectResponse;
 
   const mdBlocks = await n2md.pageToMarkdown(notionPage.id);
 
   const content = n2md.toMarkdownString(mdBlocks).parent;
 
-  const imageTransformer = new ImageTransformer(path.join(config.assetsDir, path.basename(filePath, ".smd")));
+  const imageTransformer = new ImageTransformer(
+    path.join(config.assetsDir, path.basename(filePath, ".smd"))
+  );
 
-  const cover = notionPage.cover && await imageTransformer.processImageBlock({
-    id: "cover",
-    image: notionPage.cover,
-  }, {
-    className: "cover",
-  });
+  const cover =
+    notionPage.cover &&
+    (await imageTransformer.processImageBlock(
+      {
+        id: "cover",
+        image: notionPage.cover,
+      },
+      {
+        className: "cover",
+      }
+    ));
 
   const mdContent = `---
 .title = "${page.title}",
@@ -188,7 +204,7 @@ for (const dir of directories) {
 
 const unusedEntries = difference(
   Array.from(existingFiles),
-  Array.from(referencedFiles),
+  Array.from(referencedFiles)
 );
 
 const unusedFiles = unusedEntries.filter((file) => fs.statSync(file).isFile());
@@ -213,7 +229,9 @@ for (const dir of unusedDirectories) {
 // generate a assets.zon file
 console.log("Generating assets.zig file...");
 
-const assetFiles = Array.from(referencedFiles).filter((file) => file.startsWith("assets") && fs.statSync(file).isFile());
+const assetFiles = Array.from(referencedFiles).filter(
+  (file) => file.startsWith("assets") && fs.statSync(file).isFile()
+);
 
 const writer = fs.createWriteStream("assets.zig", { flags: "w" });
 writer.write("pub const assets = [_][]const u8{");
