@@ -8,6 +8,7 @@
 .aliases = ["unrecord-is-this-game-footage-real-or-fake/index.html"],
 .custom = {
   .cover = "<picture><source type='image/webp' srcset='/../posts/2023-04-22-unrecord-is-this-game-footage-real-or-fake/cover-thumbnail.webp 300w, /../posts/2023-04-22-unrecord-is-this-game-footage-real-or-fake/cover-small.webp 600w, /../posts/2023-04-22-unrecord-is-this-game-footage-real-or-fake/cover-medium.webp 900w, /../posts/2023-04-22-unrecord-is-this-game-footage-real-or-fake/cover-large.webp 1200w, /../posts/2023-04-22-unrecord-is-this-game-footage-real-or-fake/cover-xlarge.webp 1800w,' sizes='100vw'><img src='/../posts/2023-04-22-unrecord-is-this-game-footage-real-or-fake/cover-xlarge.webp' alt='Image' class='cover'></picture>",
+  .preview = "cover-small.webp",
   .featured = false,
 },
 ---

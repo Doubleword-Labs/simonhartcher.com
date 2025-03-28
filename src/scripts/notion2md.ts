@@ -18,11 +18,11 @@ fs.mkdirSync(config.postsDir, { recursive: true });
 fs.mkdirSync(config.assetsDir, { recursive: true });
 
 const existingFiles = new Set<string>();
-fs.readdirSync(config.postsDir, { recursive: true }).forEach((file) =>
-  existingFiles.add(path.join(config.postsDir, file))
+fs.readdirSync(config.postsDir, { recursive: true, encoding: "utf8" }).forEach(
+  (file) => existingFiles.add(path.join(config.postsDir, file))
 );
-fs.readdirSync(config.assetsDir, { recursive: true }).forEach((file) =>
-  existingFiles.add(path.join(config.assetsDir, file))
+fs.readdirSync(config.assetsDir, { recursive: true, encoding: "utf8" }).forEach(
+  (file) => existingFiles.add(path.join(config.assetsDir, file))
 );
 
 const referencedFiles = new Set<string>();
@@ -126,6 +126,7 @@ for (const page of response.results as PageObjectResponseWithProperties[]) {
 .aliases = ["${slug}/index.html"],
 .custom = {
   ${cover ? `.cover = "${cover.rawHtml.replace(/"/gm, "'")}",` : ""}
+  ${cover ? `.preview = "${cover.url}",` : ""}
   .featured = ${props.Featured.checkbox},
 },
 ---

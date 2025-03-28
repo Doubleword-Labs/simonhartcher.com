@@ -120,7 +120,7 @@ export class ImageTransformer {
     });
 
     return {
-      url: results.large,
+      url: results.small ?? results.thumbnail ?? results.original,
       markdown: "```=html\n" + rawHtml + "\n```\n",
       rawHtml,
     };
@@ -249,7 +249,7 @@ export class ImageTransformer {
       if (sizeName === "original") continue; // Skip the original image in srcset
 
       const width = imageSizes[sizeName as ImageSizeNames]!.width;
-      const url = imageResults[sizeName];
+      const url = imageResults[sizeName as ImageSizeNames];
 
       srcset += `${imageAsset(url)} ${width}w, `;
     }

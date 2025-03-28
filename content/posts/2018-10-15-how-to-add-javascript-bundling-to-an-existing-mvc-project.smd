@@ -8,6 +8,7 @@
 .aliases = ["how-to-add-java-script-bundling-to-an-existing-mvc-project/index.html"],
 .custom = {
   .cover = "<picture><source type='image/webp' srcset='/../posts/2018-10-15-how-to-add-javascript-bundling-to-an-existing-mvc-project/cover-thumbnail.webp 300w, /../posts/2018-10-15-how-to-add-javascript-bundling-to-an-existing-mvc-project/cover-small.webp 600w,' sizes='100vw'><img src='/../posts/2018-10-15-how-to-add-javascript-bundling-to-an-existing-mvc-project/cover-small.webp' alt='Image' class='cover'></picture>",
+  .preview = "cover-small.webp",
   .featured = false,
 },
 ---
